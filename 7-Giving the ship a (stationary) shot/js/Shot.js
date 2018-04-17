@@ -1,28 +1,19 @@
-const SPACESPEED_DECAY_MULT = 0.99;
-const THRUST_POWER = 0.1;
-const TURN_RATE = 0.1;
+const SHOT_SPEED = 6.0;
+const SHOT_LIFE = 30;
+const SHOT_DISPLAY_RADIUS = 2.0;
 
-function shipClass() {
+function shotClass() {
 	this.x = 75;
 	this.y = 75;
 	this.ang = 0;
 	this.driftX = 0;
 	this.driftY = 0;
 	this.myShipPic; // which picture to use
-	
-	this.keyHeld_Thrust = false;
-	this.keyHeld_TurnLeft = false;
-	this.keyHeld_TurnRight = false;
+	this.shotLife;
 
 	this.controlKeyUp;
 	this.controlKeyRight;
 	this.controlKeyLeft;
-
-	this.setupInput = function(upKey, rightKey, leftKey) {
-		this.controlKeyUp = upKey;
-		this.controlKeyRight = rightKey;
-		this.controlKeyLeft = leftKey;
-	}
 
 	this.reset = function(whichImage) {
 		this.myShipPic = whichImage;
@@ -30,20 +21,13 @@ function shipClass() {
 		this.y = (canvas.height - shipPic.height) * 0.5;
 		this.driftX = 0;
 		this.driftY = 0;
+		this.shotLife = 0;
 	} // end of shipReset func
 
 	this.move = function() {
-		if(this.keyHeld_Thrust) {
-			this.driftX += Math.cos(this.ang) * THRUST_POWER;
-			this.driftY += Math.sin(this.ang) * THRUST_POWER;
-		}
-		if(this.keyHeld_TurnLeft) {
-				this.ang -= TURN_RATE;
-		}
-		if(this.keyHeld_TurnRight) {
-				this.ang += TURN_RATE;
-		}
-
+		this.driftX += Math.cos(this.ang) * THRUST_POWER;
+		this.driftY += Math.sin(this.ang) * THRUST_POWER;
+		
 		this.x += this.driftX;
 		this.y += this.driftY;	
 
@@ -72,7 +56,15 @@ function shipClass() {
 		}
 	}
 
+	this.shootFrom = function(playerShip)
+	{
+		if (this.shotLife == 0) 
+		{
+
+		}
+	}
+
 	this.draw = function() {
-		drawBitmapCenteredWithRotation(this.myShipPic, this.x,this.y, this.ang);
+		
 	}
 }
