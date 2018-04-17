@@ -1,6 +1,6 @@
 const SHOT_SPEED = 6.0;
 const SHOT_LIFE = 30;
-const SHOT_DISPLAY_RADIUS = 1.0;
+const SHOT_DISPLAY_RADIUS = 3.0;
 
 function shotClass() {
 	this.x = 75;
