@@ -9,7 +9,8 @@ function shipClass() {
 	this.driftX = 0;
 	this.driftY = 0;
 	this.myShipPic; // which picture to use
-	
+	this.myShot = new shotClass();
+
 	this.keyHeld_Thrust = false;
 	this.keyHeld_TurnLeft = false;
 	this.keyHeld_TurnRight = false;
@@ -17,11 +18,13 @@ function shipClass() {
 	this.controlKeyUp;
 	this.controlKeyRight;
 	this.controlKeyLeft;
+	this.controlKeyForShotFire;
 
-	this.setupInput = function(upKey, rightKey, leftKey) {
+	this.setupInput = function(upKey, rightKey, leftKey, shotKey) {
 		this.controlKeyUp = upKey;
 		this.controlKeyRight = rightKey;
 		this.controlKeyLeft = leftKey;
+		this.controlKeyForShotFire = shotKey;
 	}
 
 	this.reset = function(whichImage) {
@@ -30,6 +33,7 @@ function shipClass() {
 		this.y = (canvas.height - shipPic.height) * 0.5;
 		this.driftX = 0;
 		this.driftY = 0;
+		this.myShot.reset();
 	} // end of shipReset func
 
 	this.move = function() {
@@ -50,6 +54,7 @@ function shipClass() {
 
 		this.driftX *= SPACESPEED_DECAY_MULT;
 		this.driftY *= SPACESPEED_DECAY_MULT;
+		this.myShot.move();
 	}
 
 	this.handleEdgeWrap = function()
@@ -73,6 +78,12 @@ function shipClass() {
 	}
 
 	this.draw = function() {
+		this.myShot.draw();
 		drawBitmapCenteredWithRotation(this.myShipPic, this.x,this.y, this.ang);
+	}
+
+	this.cannonFire = function()
+	{
+		this.myShot.shootFrom(this);
 	}
 }

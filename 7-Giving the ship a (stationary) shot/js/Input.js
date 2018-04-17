@@ -2,6 +2,7 @@ const KEY_W = 87;
 const KEY_A = 65;
 const KEY_S = 83;
 const KEY_D = 68;
+const KEY_SPACEBAR = 32;
 
 var mouseX = 0;
 var mouseY = 0;
@@ -12,7 +13,7 @@ function setupInput() {
 	document.addEventListener('keydown', keyPressed);
 	document.addEventListener('keyup', keyReleased);
 
-	playerShip.setupInput(KEY_W, KEY_D, KEY_A);
+	playerShip.setupInput(KEY_W, KEY_D, KEY_A, KEY_SPACEBAR);
 } 
 
 function updateMousePos(evt) {
@@ -44,6 +45,11 @@ function keySet(keyEvent, setTo) {
 function keyPressed(evt) {
 	// console.log("Key pressed: "+evt.keyCode);
 	keySet(evt, true);
+
+	if (evt.keyCode == playerShip.controlKeyForShotFire) 
+	{
+		playerShip.cannonFire();
+	}
 
 	evt.preventDefault();
 }

@@ -1,6 +1,6 @@
 const SHOT_SPEED = 6.0;
 const SHOT_LIFE = 30;
-const SHOT_DISPLAY_RADIUS = 2.0;
+const SHOT_DISPLAY_RADIUS = 1.0;
 
 function shotClass() {
 	this.x = 75;
@@ -9,31 +9,21 @@ function shotClass() {
 	this.driftX = 0;
 	this.driftY = 0;
 	this.myShipPic; // which picture to use
-	this.shotLife;
+	this.shotLife = 0;
 
 	this.controlKeyUp;
 	this.controlKeyRight;
 	this.controlKeyLeft;
 
-	this.reset = function(whichImage) {
-		this.myShipPic = whichImage;
-		this.x = (canvas.width - shipPic.width) * 0.5;
-		this.y = (canvas.height - shipPic.height) * 0.5;
-		this.driftX = 0;
-		this.driftY = 0;
+	this.reset = function() {
 		this.shotLife = 0;
-	} // end of shipReset func
+	} // end of shotReset func
 
 	this.move = function() {
-		this.driftX += Math.cos(this.ang) * THRUST_POWER;
-		this.driftY += Math.sin(this.ang) * THRUST_POWER;
-		
-		this.x += this.driftX;
-		this.y += this.driftY;	
-
-
-		this.driftX *= SPACESPEED_DECAY_MULT;
-		this.driftY *= SPACESPEED_DECAY_MULT;
+		if (this.shotLife > 0) 
+		{
+			this.shotLife--;
+		}
 	}
 
 	this.handleEdgeWrap = function()
@@ -56,15 +46,21 @@ function shotClass() {
 		}
 	}
 
-	this.shootFrom = function(playerShip)
+	this.shootFrom = function(shipFiring)
 	{
-		if (this.shotLife == 0) 
-		{
+		this.x = shipFiring.x;
+		this.y = shipFiring.y;
 
-		}
+		this.xv = 0;
+		this.yv = 0;
+
+		this.shotLife = SHOT_LIFE;
 	}
 
 	this.draw = function() {
-		
+		if (this.shotLife > 0) 
+		{
+			colorCircle(this.x,this.y, SHOT_DISPLAY_RADIUS, 'white');
+		}
 	}
 }
