@@ -8,7 +8,7 @@ function shotClass() {
 	this.ang = 0;
 	this.driftX = 0;
 	this.driftY = 0;
-	this.myShipPic; // which picture to use
+	this.myShipPic; // which picture to us
 	this.shotLife = 0;
 
 	this.controlKeyUp;
