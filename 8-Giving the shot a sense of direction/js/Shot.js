@@ -1,31 +1,27 @@
 const SHOT_SPEED = 6.0;
-const SHOT_LIFE = 30;
+const SHOT_LIFE = 30;//sets how long each shot will alive
 const SHOT_DISPLAY_RADIUS = 3.0;
 
 function shotClass() {
 	this.x = 75;
 	this.y = 75;
-	this.ang = 0;
-	this.driftX = 0;
-	this.driftY = 0;
-	this.myShipPic; // which picture to use
 	this.shotLife = 0;
-
-	this.controlKeyUp;
-	this.controlKeyRight;
-	this.controlKeyLeft;
 
 	this.reset = function() {
 		this.shotLife = 0;
 	} // end of shotReset func
 
 	this.move = function() {
-		this.driftX = 0;
-		this.driftY = 0;
+		//updates shot's pos according to shot speed and dir
+		this.x += this.xv;
+		this.y += this.yv;
+
 		if (this.shotLife > 0) 
 		{
 			this.shotLife--;
 		}
+		
+		this.handleEdgeWrap();
 	}
 
 	this.handleEdgeWrap = function()
@@ -50,11 +46,13 @@ function shotClass() {
 
 	this.shootFrom = function(shipFiring)
 	{
+		//next two lines set initial position to fire from
 		this.x = shipFiring.x;
 		this.y = shipFiring.y;
 
-		this.xv = 0;
-		this.yv = 0;
+		//next two lines set direction of travel for each shot
+		this.xv = Math.cos(shipFiring.ang) * SHOT_SPEED + shipFiring.driftX;
+		this.yv = Math.sin(shipFiring.ang) * SHOT_SPEED + shipFiring.driftY;
 
 		this.shotLife = SHOT_LIFE;
 	}
